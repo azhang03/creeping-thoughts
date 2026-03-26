@@ -1,6 +1,5 @@
 /* ==========================================================================
-   Creeping Thoughts — Liminal / Uncanny Theme
-   Three tiers: liminal (A), reframe (B), backrooms (C)
+   Creeping Thoughts — Backrooms Theme
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
@@ -15,7 +14,7 @@
   --accent-hover:   #5d8384;
   --secondary:      #c2453d;
   --secondary-dim:  rgba(194, 69, 61, 0.5);
-  --rule:           #c4b89e;
+  --rule:           #b0a48a;
 
   --font-display:   'Space Mono', 'Courier New', monospace;
   --font-heading:   'Instrument Serif', 'Georgia', serif;
@@ -43,7 +42,51 @@ body {
   background: var(--bg);
   min-height: 100vh;
   overflow-x: hidden;
-  transition: background-color 0.5s ease;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 119px,
+      rgba(160, 145, 115, 0.2) 119px,
+      rgba(160, 145, 115, 0.2) 120px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 119px,
+      rgba(160, 145, 115, 0.2) 119px,
+      rgba(160, 145, 115, 0.2) 120px
+    );
+  background-size: 120px 120px;
+}
+
+/* Fluorescent glow strip at the top */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 5%,
+    rgba(200, 210, 190, 0.5) 20%,
+    rgba(220, 230, 210, 0.7) 50%,
+    rgba(200, 210, 190, 0.5) 80%,
+    transparent 95%
+  );
+  z-index: 10000;
+  pointer-events: none;
+  animation: fluorescent-bar 8s ease-in-out infinite;
+}
+
+@keyframes fluorescent-bar {
+  0%, 100% { opacity: 0.6; }
+  30%      { opacity: 0.9; }
+  32%      { opacity: 0.4; }
+  34%      { opacity: 0.85; }
+  70%      { opacity: 0.75; }
 }
 
 ::selection {
@@ -70,6 +113,24 @@ img { max-width: 100%; display: block; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  filter: brightness(1.02) saturate(0.85) sepia(0.05);
+}
+
+/* Continuous solid background strip behind all content */
+.page-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--content-width);
+  max-width: 100%;
+  background: var(--bg);
+  border-left: 1px solid rgba(160, 145, 115, 0.25);
+  border-right: 1px solid rgba(160, 145, 115, 0.25);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .content-col {
@@ -77,6 +138,8 @@ img { max-width: 100%; display: block; }
   max-width: var(--content-width);
   margin-inline: auto;
   padding-inline: var(--page-pad);
+  transition: transform 0.3s ease;
+  will-change: transform;
 }
 
 /* --- Site Header --- */
@@ -103,35 +166,25 @@ img { max-width: 100%; display: block; }
   color: var(--text);
 }
 
-/* Live clock injected by JS in reframe/backrooms tiers */
+/* --- Live Clock (institutional wall clock) --- */
 .live-clock {
+  display: block;
+  text-align: center;
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: 1.1rem;
+  font-weight: 400;
   color: var(--text-muted);
-  letter-spacing: 0.1em;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
+  letter-spacing: 0.15em;
+  padding: 0.75rem 0 0.5rem;
+  animation: clock-flicker 6s ease-in-out infinite;
 }
 
-/* --- Theme Toggle --- */
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--rule);
-  color: var(--text-muted);
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  padding: 0.3rem 0.75rem;
-  border-radius: 0;
-  cursor: pointer;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color 0.3s ease, border-color 0.3s ease;
-}
-
-.theme-toggle:hover {
-  color: var(--text);
-  border-color: var(--text);
+@keyframes clock-flicker {
+  0%, 100% { opacity: 0.7; }
+  40%      { opacity: 0.85; }
+  42%      { opacity: 0.5; }
+  44%      { opacity: 0.8; }
+  75%      { opacity: 0.7; }
 }
 
 /* --- Homepage Hero --- */
@@ -163,7 +216,7 @@ img { max-width: 100%; display: block; }
 /* --- Homepage Intro --- */
 .intro {
   padding-bottom: 3.5rem;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
   margin-bottom: 3.5rem;
 }
 
@@ -195,13 +248,13 @@ img { max-width: 100%; display: block; }
 .essay-card {
   display: block;
   padding: 2rem 0;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
   text-decoration: none;
   transition: padding-left 0.5s ease, background 0.4s ease, transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .essay-card:first-child {
-  border-top: 1px solid var(--rule);
+  border-top: 2px solid var(--rule);
 }
 
 .essay-card:hover {
@@ -323,38 +376,73 @@ img { max-width: 100%; display: block; }
 
 /* --- Essay Footer Nav --- */
 .essay-nav {
-  border-top: 1px solid var(--rule);
-  padding: 2.5rem 0 5rem;
+  border-top: 2px solid var(--rule);
+  padding: 2.5rem 1rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.essay-nav__back {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  padding: 0.6rem 2rem;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.essay-nav__back:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.essay-nav__siblings {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  width: 100%;
   gap: 1rem;
 }
 
-.essay-nav a {
+.essay-nav__siblings a {
   font-family: var(--font-display);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: var(--text-muted);
   letter-spacing: 0.06em;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  min-width: 0;
 }
 
-.essay-nav a:hover {
+.essay-nav__siblings a .nav-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.essay-nav__siblings a:nth-child(2) {
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+.essay-nav__siblings a:hover {
   color: var(--secondary);
-}
-
-.essay-nav__back {
-  font-size: 0.7rem !important;
-  text-transform: uppercase;
-  letter-spacing: 0.12em !important;
 }
 
 /* --- Site Footer --- */
 .site-footer {
   margin-top: auto;
   padding: 2.5rem 0;
-  border-top: 1px solid var(--rule);
+  border-top: 2px solid var(--rule);
   text-align: center;
 }
 
@@ -365,14 +453,14 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.08em;
 }
 
-/* Time-on-page ghost — fixed in margin gutters, flickers via JS */
+/* --- Time-on-page ghost (flickers in margin gutters via JS) --- */
 .time-ghost {
   position: fixed;
   z-index: 100;
   font-family: var(--font-display);
   font-size: 0.7rem;
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text);
   letter-spacing: 0.06em;
   line-height: 1.5;
   opacity: 0;
@@ -380,121 +468,12 @@ img { max-width: 100%; display: block; }
   user-select: none;
 }
 
-[data-theme="backrooms"] .time-ghost {
-  color: var(--text);
-}
-
-/* Ambient hum toggle (backrooms only) */
-.hum-toggle {
-  background: none;
-  border: 1px solid var(--rule);
-  color: var(--text-muted);
-  font-family: var(--font-display);
-  font-size: 0.65rem;
-  padding: 0.2rem 0.6rem;
-  cursor: pointer;
-  letter-spacing: 0.06em;
-  margin-top: 0.5rem;
-  opacity: 0;
-  transition: opacity 0.6s ease, color 0.3s ease, border-color 0.3s ease;
-  pointer-events: none;
-}
-
-.hum-toggle:hover {
-  color: var(--text);
-  border-color: var(--text);
-}
-
-.hum-toggle.active {
-  color: var(--secondary);
-  border-color: var(--secondary);
-}
-
-/* Liminal drift class for JS letter-spacing control */
+/* --- Liminal drift (JS letter-spacing control) --- */
 .liminal-drift {
   transition: letter-spacing 1.2s ease;
 }
 
-/* ==========================================================================
-   TIER B — REFRAME
-   ========================================================================== */
-
-/* Ceiling tile grid */
-[data-theme="reframe"] body,
-[data-theme="backrooms"] body {
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 119px,
-      rgba(160, 145, 115, 0.2) 119px,
-      rgba(160, 145, 115, 0.2) 120px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 119px,
-      rgba(160, 145, 115, 0.2) 119px,
-      rgba(160, 145, 115, 0.2) 120px
-    );
-  background-size: 120px 120px;
-}
-
-/* Fluorescent glow strip at the top */
-[data-theme="reframe"] body::before,
-[data-theme="backrooms"] body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent 5%,
-    rgba(200, 210, 190, 0.5) 20%,
-    rgba(220, 230, 210, 0.7) 50%,
-    rgba(200, 210, 190, 0.5) 80%,
-    transparent 95%
-  );
-  z-index: 10000;
-  pointer-events: none;
-  animation: fluorescent-bar 8s ease-in-out infinite;
-}
-
-@keyframes fluorescent-bar {
-  0%, 100% { opacity: 0.6; }
-  30%      { opacity: 0.9; }
-  32%      { opacity: 0.4; }
-  34%      { opacity: 0.85; }
-  70%      { opacity: 0.75; }
-}
-
-/* Corridor framing — faint vertical walls on content column */
-[data-theme="reframe"] .content-col,
-[data-theme="backrooms"] .content-col {
-  border-left: 1px solid rgba(160, 145, 115, 0.25);
-  border-right: 1px solid rgba(160, 145, 115, 0.25);
-}
-
-/* Show live clock */
-[data-theme="reframe"] .live-clock,
-[data-theme="backrooms"] .live-clock {
-  opacity: 0.6;
-}
-
-/* time-on-page ghost is styled above, flickered via JS */
-
-/* ==========================================================================
-   TIER C — BACKROOMS
-   ========================================================================== */
-
-/* Slightly warmer overexposed filter */
-[data-theme="backrooms"] body {
-  filter: brightness(1.02) saturate(0.85) sepia(0.05);
-}
-
-/* Doorway overlay — two halves that split apart like doors */
+/* --- Doorway overlay (two halves that split apart) --- */
 .doorway-left,
 .doorway-right {
   position: fixed;
@@ -527,14 +506,13 @@ img { max-width: 100%; display: block; }
   100% { transform: translateX(105%); }
 }
 
-/* Water stain patches — positioned by JS via inline styles */
+/* --- Water stain patches (positioned by JS) --- */
 .water-stain {
   position: fixed;
   pointer-events: none;
   z-index: 0;
   border-radius: 45% 55% 50% 50%;
-  opacity: 0;
-  transition: opacity 1.5s ease;
+  opacity: 1;
   background: radial-gradient(
     ellipse at 45% 40%,
     rgba(175, 155, 120, 0.38) 0%,
@@ -544,30 +522,13 @@ img { max-width: 100%; display: block; }
   );
 }
 
-[data-theme="backrooms"] .water-stain {
-  opacity: 1;
-}
-
-/* Show ambient hum toggle */
-[data-theme="backrooms"] .hum-toggle {
-  opacity: 0.5;
-  pointer-events: auto;
-}
-
-/* Subtle depth shift on content (2D — no perspective to avoid scroll jitter) */
-[data-theme="backrooms"] .content-col {
-  transition: transform 0.3s ease;
-  will-change: transform;
-}
-
 /* --- Responsive --- */
 @media (max-width: 480px) {
   .hero { padding: 5rem 0 3rem; }
   .essay-header { padding: 4rem 0 2.5rem; }
   .essay-nav { flex-direction: column; text-align: center; gap: 0.75rem; }
 
-  [data-theme="reframe"] .content-col,
-  [data-theme="backrooms"] .content-col {
+  .page-wrapper::before {
     border-left: none;
     border-right: none;
   }

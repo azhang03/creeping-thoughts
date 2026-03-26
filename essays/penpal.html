@@ -6,7 +6,7 @@
   <title>Someone Was Watching — Creeping Thoughts</title>
   <link rel="stylesheet" href="../css/liminal.css">
 </head>
-<body data-theme="liminal">
+<body data-theme="backrooms">
 
   <div class="page-wrapper">
 
@@ -14,9 +14,11 @@
     <header class="site-header">
       <div class="content-col">
         <a href="../index.html" class="site-header__home">Creeping Thoughts</a>
-        <button class="theme-toggle" aria-label="Cycle liminal tier">LIMINAL</button>
       </div>
     </header>
+
+    <!-- Clock -->
+    <div class="live-clock content-col"></div>
 
     <!-- Essay Header -->
     <div class="essay-header content-col">
@@ -29,30 +31,30 @@
     <article class="essay-body content-col">
 
       <div class="placeholder-notice">
-        Just some template code. Imma put my reflection 
-        on "Penpal" by Dathan Auerbach. Reminders: Use plain &lt;p&gt; tags for paragraphs, &lt;blockquote&gt; 
+        Just some template code. Imma put my reflection
+        on "Penpal" by Dathan Auerbach. Reminders: Use plain &lt;p&gt; tags for paragraphs, &lt;blockquote&gt;
         for pull quotes, and &lt;em&gt; for emphasis.
       </div>
 
       <p>
-        This is a sample paragraph showing how the body text renders. <em>Penpal</em> begins as 
-        a series of seemingly unrelated childhood memories — a balloon project at school, 
-        sleepwalking episodes, a friend who vanished — that slowly resolve into something 
-        much more disturbing. The horror isn't in any single event. It's in the realization 
+        This is a sample paragraph showing how the body text renders. <em>Penpal</em> begins as
+        a series of seemingly unrelated childhood memories — a balloon project at school,
+        sleepwalking episodes, a friend who vanished — that slowly resolve into something
+        much more disturbing. The horror isn't in any single event. It's in the realization
         that connects them all.
       </p>
 
       <p>
-        What makes the story linger is how it mirrors the way memory actually works. 
-        You carry fragments around for years, harmless little scenes, and then one day 
-        a new piece of information arrives and rearranges everything. The past doesn't 
-        change, but your understanding of it does — and suddenly the thing you thought 
+        What makes the story linger is how it mirrors the way memory actually works.
+        You carry fragments around for years, harmless little scenes, and then one day
+        a new piece of information arrives and rearranges everything. The past doesn't
+        change, but your understanding of it does — and suddenly the thing you thought
         was innocent becomes something you survived.
       </p>
 
       <p>
-        The rest of your reflection would continue here, moving between the story and 
-        your own experience of memory, retrospection, and the moments you've 
+        The rest of your reflection would continue here, moving between the story and
+        your own experience of memory, retrospection, and the moments you've
         reinterpreted only after the fact.
       </p>
 
@@ -60,9 +62,11 @@
 
     <!-- Navigation -->
     <nav class="essay-nav content-col">
-      <a href="left-right-game.html">&larr; The Road That Thinks For You</a>
-      <a href="../index.html" class="essay-nav__back">All Essays</a>
-      <a href="red-factory.html">The Machine That Writes Dread &rarr;</a>
+      <a href="../index.html" class="essay-nav__back">Exit</a>
+      <div class="essay-nav__siblings">
+        <a href="left-right-game.html">&larr; <span class="nav-label">The Road That Thinks For You</span></a>
+        <a href="red-factory.html"><span class="nav-label">The Machine That Writes Dread</span> &rarr;</a>
+      </div>
     </nav>
 
     <!-- Footer -->
