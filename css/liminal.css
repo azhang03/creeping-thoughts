@@ -429,9 +429,13 @@ img { max-width: 100%; display: block; }
   min-width: 0;
 }
 
-.essay-nav__siblings a:nth-child(2) {
+.essay-nav__siblings {
+  justify-content: space-between;
+}
+
+.essay-nav__siblings .essay-nav__next {
   margin-left: auto;
-  justify-content: flex-end;
+  text-align: right;
 }
 
 .essay-nav__siblings a:hover {
