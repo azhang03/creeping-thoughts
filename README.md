@@ -2,7 +2,7 @@
 
 A five-piece horror-themed reflective essay collection, presented as a personal website.
 
-Each essay begins with a horror story — a creepypasta, an online serial, a piece of internet fiction — and uses it as a starting point for personal and philosophical reflection. These aren't reviews. They're attempts to understand why certain dark stories stick with us, and what they reveal about the way we live.
+Each essay is a bit of a mix between personal reflection and horror story review
 
 ## Essays
 
