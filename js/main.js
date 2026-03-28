@@ -160,16 +160,16 @@
       safePosition();
 
       var steps = [
-        { opacity: 0.35, duration: 60 },
+        { opacity: 0.5,  duration: 60 },
         { opacity: 0,    duration: 80 },
-        { opacity: 0.5,  duration: 50 },
+        { opacity: 0.7,  duration: 50 },
         { opacity: 0,    duration: 100 },
-        { opacity: 0.25, duration: 40 },
+        { opacity: 0.4,  duration: 40 },
         { opacity: 0,    duration: 70 },
-        { opacity: 0.4,  duration: 60 },
-        { opacity: 0.35, duration: 30000 },
+        { opacity: 0.6,  duration: 60 },
+        { opacity: 0.55, duration: 15000 },
         { opacity: 0,    duration: 80 },
-        { opacity: 0.2,  duration: 50 },
+        { opacity: 0.3,  duration: 50 },
         { opacity: 0,    duration: 0 }
       ];
 
