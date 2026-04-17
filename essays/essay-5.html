@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Essay 05 — Creeping Thoughts</title>
+  <title>Endings — Creeping Thoughts</title>
   <link rel="stylesheet" href="../css/liminal.css">
 </head>
 <body data-theme="backrooms">
@@ -22,8 +22,10 @@
 
     <!-- Essay Header -->
     <div class="essay-header content-col">
-      <h1 class="essay-header__title">Title Forthcoming</h1>
-      <p class="essay-header__source">Horror work TBD</p>
+      <h1 class="essay-header__title">Endings</h1>
+      <p class="essay-header__source">On "<a
+          href="https://ck-walker.com/2016/04/12/borrasca/"
+          target="_blank" rel="noopener">Borrasca</a>" by C.K. Walker</p>
       <hr class="essay-header__rule">
     </div>
 
@@ -31,11 +33,58 @@
     <article class="essay-body content-col">
 
       <div class="placeholder-notice">
-        This essay hasn't been written yet. Not sure what I'm gonna write about, but I'll
-        fill it with my reflection. Reminders: Update the title in the &lt;h1&gt;, the
-        horror work in the &lt;p class="essay-header__source"&gt;, and the &lt;title&gt;
-        tag in the &lt;head&gt;. Also update the corresponding entry on index.html.
+        "I'm starting to think the author legitimately does have two wolves inside them, except one is a good writer and one is a 13 year old Wattpad author" ~ sXe_savior, Reddit
       </div>
+
+      <p>
+        C.K. Walker somehow always manages to write the most cringely cinematic and cliche endings
+        no matter how fascinating the world and story is initially, one of the most egregious examples, I
+        believe, being <em>Borrasca V</em>. Though maybe that's what allowed her to become a writer for <em>The
+        Haunting of Hill House</em>. She also always somehow manages to mention rock bands like Guns N'
+        Roses into the sound track of her stories&ndash; <em>I don't hate rockbands, just think it's somewhat funny
+        that she plays soundtracks&hellip;for writing.</em>
+      </p>
+
+      <p>
+        I never really dislike her stories though (however, I may end up finding them amusing rather
+        than scary), because I suck at endings too. Massively. If I'm just saying the same thing as I did
+        in the beginning, then it ends up being redundant. If I try to make a connection to the real world&ndash;
+        shout out to my AP essay peeps&ndash; it sometimes ends up sounding hyperbolic. My high school
+        AP English teacher once laughed at me after reading a connection I drew between robots in <em>Do
+        Androids Dream of Electric Sheep</em> to Post-WWII patriarchy. Gave me the nuance point though!
+      </p>
+
+      <p>
+        After kindergarten, my mother moved us from Atlanta, Georgia to L.A. to follow her career
+        development. When I turned seven, I then had to move from L.A. to Farmington, Connecticut. In
+        the last weeks of sixth grade, I'd then move back to L.A., where I finished out sixth grade at a
+        middle school, and then switched schools again to another district. Finished out 7th and 8th
+        grade there, tested into a private high school, and had to uproot myself once again. College
+        happened as well. In applications (grad and job), I love detailing these major life changes to
+        explain why I am above-and-beyond in adaptability and versatility.
+      </p>
+
+      <p>
+        After each and every one of those changes, I'd be depressed for weeks on end, one inhale from
+        crying my indescribable aches out&ndash; I cried a LOT. I have gained no such defenses or
+        vulnerabilities to endings and change despite how much exposure I've been provided. They are
+        awkward, annoying ultimatums that I just do not understand how to deal with.
+      </p>
+
+      <p>
+        Maybe that's how C.K. Walker feels as well; it's just that, with writing, she's able to draw from
+        what she knows, and she knows satisfying, happy-ending cinema, so that's what she writes.
+        Real-life isn't exactly that malleable, so I've decided to just keep moving forward instead. In the
+        past, it always pissed me off when people told me to deal with my anxieties and problems by
+        just moving forward and tackling them head on, but now I kind of get it. I'll no longer have things
+        to end, just a long line of never ending To-Dos.
+      </p>
+
+      <p>
+        Aight, that's it. How do I finish this...
+      </p>
+
+      <div class="todo-list" id="todo-list"></div>
 
     </article>
 
@@ -55,5 +104,35 @@
   </div>
 
   <script src="../js/main.js"></script>
+  <script>
+    (function () {
+      var list = document.getElementById('todo-list');
+
+      function addItem() {
+        var item = document.createElement('div');
+        item.className = 'todo-item';
+
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+
+        var label = document.createElement('span');
+        label.className = 'todo-item__label';
+        label.textContent = 'Write conclusion';
+
+        cb.addEventListener('change', function () {
+          label.textContent = 'Brainstorm conclusions';
+          item.classList.add('todo-item--done');
+          cb.disabled = true;
+          addItem();
+        });
+
+        item.appendChild(cb);
+        item.appendChild(label);
+        list.appendChild(item);
+      }
+
+      addItem();
+    })();
+  </script>
 </body>
 </html>
