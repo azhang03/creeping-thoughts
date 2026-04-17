@@ -170,6 +170,165 @@
   </div>
 
   <script src="../js/main.js"></script>
+  <script>
+    /* Apple ghost — replaces the default time-ghost on this page only */
+    (function () {
+      'use strict';
+
+      /* Hide the text-based time-ghost that main.js creates */
+      var suppress = document.createElement('style');
+      suppress.textContent = '.time-ghost { display: none !important; }';
+      document.head.appendChild(suppress);
+
+      var el         = null;
+      var clockText  = null;
+      var ghostTimer = null;
+      var clockTimer = null;
+
+      var startTime = Date.now();
+
+      function pad2(n) { return String(n).padStart(2, '0'); }
+
+      function updateClock() {
+        if (!clockText) return;
+        var elapsed = Math.floor((Date.now() - startTime) / 1000);
+        var mm = Math.floor(elapsed / 60);
+        var ss = elapsed % 60;
+        clockText.textContent = pad2(mm) + ':' + pad2(ss);
+      }
+
+      function svgEl(tag, attrs) {
+        var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        for (var k in attrs) e.setAttribute(k, attrs[k]);
+        return e;
+      }
+
+      function createApple() {
+        var svg = svgEl('svg', {
+          viewBox: '0 0 60 72', width: '90', height: '108',
+          xmlns: 'http://www.w3.org/2000/svg'
+        });
+
+        /* Stem — extended to y=20 so it meets the apple body (top at y=18) */
+        svg.appendChild(svgEl('rect', {
+          x: '27', y: '1', width: '3.5', height: '19', rx: '1.5', fill: '#6b4226'
+        }));
+
+        /* Leaf */
+        svg.appendChild(svgEl('ellipse', {
+          cx: '35', cy: '5', rx: '9', ry: '4',
+          fill: '#4a7c3f', transform: 'rotate(-25 35 5)'
+        }));
+
+        /* Apple body */
+        svg.appendChild(svgEl('ellipse', {
+          cx: '30', cy: '42', rx: '22', ry: '24', fill: '#c2453d'
+        }));
+
+        /* Highlight */
+        svg.appendChild(svgEl('ellipse', {
+          cx: '21', cy: '30', rx: '5', ry: '3.5',
+          fill: 'rgba(255,255,255,0.18)', transform: 'rotate(-25 21 30)'
+        }));
+
+        /* Clock screen */
+        svg.appendChild(svgEl('rect', {
+          x: '14', y: '36', width: '32', height: '14', rx: '2',
+          fill: '#1c1c1c', stroke: '#3a2e22', 'stroke-width': '0.5'
+        }));
+
+        /* Digital time text */
+        clockText = svgEl('text', {
+          x: '30', y: '47',
+          'text-anchor': 'middle',
+          'font-family': "'Space Mono', 'Courier New', monospace",
+          'font-size': '8',
+          'letter-spacing': '0.5',
+          fill: '#c2453d'
+        });
+        svg.appendChild(clockText);
+
+        el = document.createElement('div');
+        el.style.cssText = 'position:fixed;z-index:100;pointer-events:none;user-select:none;opacity:0;';
+        el.appendChild(svg);
+        document.body.appendChild(el);
+
+        updateClock();
+        clockTimer = setInterval(updateClock, 1000);
+      }
+
+      function safePosition() {
+        var vw       = window.innerWidth;
+        var vh       = window.innerHeight;
+        var pad      = 16;
+        var contentW = Math.min(660, vw);
+        var gutterW  = (vw - contentW) / 2;
+        var elW      = el.offsetWidth;
+        var elH      = el.offsetHeight;
+        var top      = pad + Math.random() * Math.max(vh - elH - pad * 2, 0);
+        var left;
+
+        if (gutterW > elW + pad * 2) {
+          if (Math.random() > 0.5) {
+            left = pad + Math.random() * Math.max(gutterW - elW - pad * 2, 0);
+          } else {
+            left = (vw - gutterW + pad) + Math.random() * Math.max(gutterW - elW - pad * 2, 0);
+          }
+        } else {
+          left = Math.random() > 0.5 ? pad : Math.max(vw - elW - pad, pad);
+        }
+
+        el.style.top   = Math.round(top)  + 'px';
+        el.style.left  = Math.round(left) + 'px';
+        el.style.right = '';
+      }
+
+      function scheduleNext() {
+        ghostTimer = setTimeout(flickerSequence, 1000 + Math.random() * 2000);
+      }
+
+      function flickerSequence() {
+        updateClock();
+        el.style.opacity = '0';
+        safePosition();
+
+        var steps = [
+          { o: 0.5, d: 60 },
+          { o: 0,   d: 80 },
+          { o: 0.7, d: 50 },
+          { o: 0,   d: 100 },
+          { o: 0.4, d: 40 },
+          { o: 0,   d: 70 },
+          { o: 0.6, d: 60 },
+          { o: 1,   d: 15000 },
+          { o: 0,   d: 80 },
+          { o: 0.3, d: 50 },
+          { o: 0,   d: 0 }
+        ];
+
+        var i = 0;
+        function runStep() {
+          if (i >= steps.length) { scheduleNext(); return; }
+          el.style.opacity = steps[i].o;
+          var dur = steps[i].d;
+          i++;
+          if (dur > 0) { setTimeout(runStep, dur); } else { scheduleNext(); }
+        }
+        runStep();
+      }
+
+      function init() {
+        createApple();
+        ghostTimer = setTimeout(flickerSequence, 2000 + Math.random() * 3000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
 </body>
 
 </html>
